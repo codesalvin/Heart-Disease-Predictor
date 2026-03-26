@@ -18,7 +18,7 @@ knn = joblib.load('models/knn_model.pkl')
 svm = joblib.load('models/svm_model.pkl')
 ann = joblib.load('models/ann_model.pkl')
 scaler = joblib.load('models/scaler.pkl')
-df = pd.read_csv('data/heart.csv')
+df = pd.read_csv('data/raw/heart.csv')
 
 # --- Sidebar Navigation ---
 st.sidebar.title("❤️ Heart Disease Predictor")

@@ -103,35 +103,35 @@ elif page == "🔍 Predict":
 
     if st.button("🔍 Predict with All Models", use_container_width=True):
         input_data = np.array([[age, sex, cp, trestbps, chol, fbs,
-                                restecg, thalach, exang, oldpeak,
-                                slope, ca, thal]])
-        input_scaled = scaler.transform(input_data)
+                            restecg, thalach, exang, oldpeak,
+                            slope, ca, thal]], dtype=float)
 
-        knn_pred = knn.predict(input_scaled)[0]
-        svm_pred = svm.predict(input_scaled)[0]
-        ann_pred = ann.predict(input_scaled)[0]
+    input_scaled = scaler.transform(input_data)
 
-        st.markdown("### Prediction Results")
-        col1, col2, col3 = st.columns(3)
+    knn_pred = int(knn.predict(input_scaled)[0])
+    svm_pred = int(svm.predict(input_scaled)[0])
+    ann_pred = int(ann.predict(input_scaled)[0])
 
-        def show_result(col, model_name, pred):
-            with col:
-                if pred == 1:
-                    st.error(f"**{model_name}**\n\n⚠️ High Risk")
-                else:
-                    st.success(f"**{model_name}**\n\n✅ Low Risk")
+    st.markdown("### Prediction Results")
+    col1, col2, col3 = st.columns(3)
 
-        show_result(col1, "KNN", knn_pred)
-        show_result(col2, "SVM", svm_pred)
-        show_result(col3, "ANN", ann_pred)
+    def show_result(col, model_name, pred):
+        with col:
+            if pred == 1:
+                st.error(f"**{model_name}**\n\n⚠️ High Risk")
+            else:
+                st.success(f"**{model_name}**\n\n✅ Low Risk")
 
-        # Consensus
-        st.markdown("---")
-        votes = knn_pred + svm_pred + ann_pred
-        if votes >= 2:
-            st.error("### ⚠️ Consensus: HIGH risk of heart disease (2 or more models agree)")
-        else:
-            st.success("### ✅ Consensus: LOW risk of heart disease (2 or more models agree)")
+    show_result(col1, "KNN", knn_pred)
+    show_result(col2, "SVM", svm_pred)
+    show_result(col3, "ANN", ann_pred)
+
+    st.markdown("---")
+    votes = knn_pred + svm_pred + ann_pred
+    if votes >= 2:
+        st.error("### ⚠️ Consensus: HIGH risk of heart disease")
+    else:
+        st.success("### ✅ Consensus: LOW risk of heart disease")
 
 # ==================== MODEL PERFORMANCE ====================
 elif page == "📊 Model Performance":

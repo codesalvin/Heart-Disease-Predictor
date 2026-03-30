@@ -81,17 +81,19 @@ knn, svm, ann, scaler, df = load_models()
 # --- SIDEBAR ---
 with st.sidebar:
     st.markdown("""
-        <div class="sidebar-brand">
-            <h1>CardioSense AI</h1>
-            <p class="sidebar-tagline">Clinical Precision</p>
+        <div style="padding: 1rem 0;">
+            <h1 style="font-family: 'Newsreader', serif; font-size: 1.8rem; margin:0;">CardioSense AI</h1>
+            <p style="font-size: 0.7rem; color: #b10c69; letter-spacing: 2px; text-transform: uppercase;">Clinical Precision</p>
         </div>
     """, unsafe_allow_html=True)
     
     page = st.radio("DASHBOARD", ["Home", "Predict", "Model Performance", "Dataset Overview"], label_visibility="collapsed")
     
-    st.markdown("<br><br>", unsafe_allow_html=True)
-    if st.button("NEW ANALYSIS", use_container_width=True):
-        st.rerun()
+        page = st.radio("NAVIGATION", ["Home", "Predict", "Performance", "Dataset"])
+    st.markdown("---")
+    st.markdown("### System Status")
+    st.success("● Models Loaded")
+    st.info("● Database Online")
 
 # --- HEADER BREADCRUMB ---
 st.markdown(f'<p class="label-caps" style="margin-left: 2rem; margin-top: 1rem;">Dashboard / {page}</p>', unsafe_allow_html=True)

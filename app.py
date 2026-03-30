@@ -152,25 +152,15 @@ if df is not None:
     col_dist, col_corr = st.columns(2)
     with col_dist:
         st.markdown("### Class Distribution")
-    # Restored to original compact size (approx 4x3 or 5x4)
-    fig_dist, ax_dist = plt.subplots(figsize=(5, 4)) 
-    
-    # Sort to ensure 0 is left and 1 is right
-    counts = df['target'].value_counts().sort_index() 
-    
-    # Plot with your specific theme colors
-    counts.plot(kind='bar', ax=ax_dist, color=['#1a1a2e', '#b10c69'])
-    
-    # Clean, simple labels
-    ax_dist.set_xticklabels(['No Disease', 'Has Disease'], rotation=0, fontsize=8)
-    ax_dist.set_xlabel("") # Remove 'target' label to save space
-    
-    # Remove borders to make it fit the 'Bento' look better
-    ax_dist.spines['top'].set_visible(False)
-    ax_dist.spines['right'].set_visible(False)
-    
-    st.pyplot(fig_dist)
-    st.markdown('</div>', unsafe_allow_html=True)
+        fig_dist, ax_dist = plt.subplots(figsize=(5, 4))
+        counts = df['target'].value_counts().sort_index()
+        counts.plot(kind='bar', ax=ax_dist, color=['#1a1a2e', '#b10c69'])
+        ax_dist.set_xticklabels(['No Disease', 'Has Disease'], rotation=0, fontsize=8)
+        ax_dist.set_xlabel("")
+        ax_dist.spines['top'].set_visible(False)
+        ax_dist.spines['right'].set_visible(False)
+        st.pyplot(fig_dist)
+        st.markdown('</div>', unsafe_allow_html=True)
 
     with col_corr:
         st.markdown("### Correlation Heatmap")

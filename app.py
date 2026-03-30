@@ -87,7 +87,7 @@ st.markdown("""
 
     /* Input text color */
     input, select, textarea {
-        color: #000000 !important;
+        color: white !important;
     }
 
     /* Sidebar + header cleanup */
@@ -116,9 +116,9 @@ knn, svm, ann, scaler, df = load_models()
 # ==================== SECTION 1: HERO ====================
 st.markdown("""
     <div style="padding-top: 2rem;">
-        <p class="label-caps">Clinical Intelligence Suite</p>
+        <p class="label-caps">Supervised ML Project</p>
         <h1 style="font-size: 5rem; line-height: 1; margin-bottom: 1.5rem;">
-            CardioSense <span style="color: #b10c69; font-style: italic;">AI</span>
+            Heart Disease Predictor <span style="color: #b10c69; font-style: italic;">AI</span>
         </h1>
         <p style="font-size: 1.4rem; color: #584048; max-width: 700px; font-weight: 300; line-height: 1.6;">
             An advanced diagnostic framework utilizing ensemble machine learning to synthesize 
@@ -178,7 +178,7 @@ if df is not None:
 
 # ==================== SECTION 4: PREDICTION ====================
 st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
-st.markdown('<h2 style="font-size: 3rem; text-align: center;">Predictive Diagnostic</h2>', unsafe_allow_html=True)
+st.markdown('<h2 style="font-size: 3rem; text-align: center;">Predict now</h2>', unsafe_allow_html=True)
 
 with st.container():
     col1, col2, col3 = st.columns(3)

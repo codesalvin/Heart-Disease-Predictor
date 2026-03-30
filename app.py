@@ -17,408 +17,89 @@ st.set_page_config(
 # --- Custom CSS (ported from HTML design system) ---
 st.markdown("""
 <style>
-    /* ── Google Fonts ── */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+/* ===== GLOBAL ===== */
+html, body, [class*="css"] {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f9fafb;
+}
 
-    /* ── Design Tokens ── */
-    :root {
-        --primary:                  #b10c69;
-        --primary-container:        #d33182;
-        --on-primary:               #ffffff;
-        --on-primary-container:     #fffbff;
-        --inverse-primary:          #ffb0cc;
-        --primary-fixed:            #ffd9e4;
-        --primary-fixed-dim:        #ffb0cc;
+/* ===== MAIN CONTENT ===== */
+.main {
+    margin-left: 260px; /* space for sidebar */
+    padding: 2rem 3rem;
+}
 
-        --secondary:                #5d5c74;
-        --secondary-container:      #e2e0fc;
-        --on-secondary:             #ffffff;
-        --on-secondary-container:   #63627a;
+/* ===== SIDEBAR FIX ===== */
+section[data-testid="stSidebar"] {
+    position: fixed !important;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 260px !important;
+    min-width: 260px !important;
+    max-width: 260px !important;
+    background: #ffffff;
+    border-right: 1px solid #e5e7eb;
+    padding: 1.5rem 1rem;
+    z-index: 100;
+}
 
-        --tertiary:                 #006a39;
-        --tertiary-container:       #00864a;
-        --on-tertiary:              #ffffff;
-        --on-tertiary-container:    #f6fff4;
-        --tertiary-fixed:           #5cff9f;
-        --tertiary-fixed-dim:       #2ee285;
-
-        --error:                    #ba1a1a;
-        --error-container:          #ffdad6;
-        --on-error:                 #ffffff;
-        --on-error-container:       #93000a;
-
-        --surface:                  #faf9f6;
-        --surface-bright:           #faf9f6;
-        --surface-dim:              #dbdad7;
-        --surface-variant:          #e3e2df;
-        --surface-tint:             #b5116b;
-        --surface-container-lowest: #ffffff;
-        --surface-container-low:    #f4f3f0;
-        --surface-container:        #efeeeb;
-        --surface-container-high:   #e9e8e5;
-        --surface-container-highest:#e3e2df;
-
-        --on-surface:               #1a1c1a;
-        --on-surface-variant:       #584048;
-        --inverse-surface:          #2f312f;
-        --inverse-on-surface:       #f2f1ee;
-
-        --outline:                  #8b7078;
-        --outline-variant:          #debec8;
-
-        --sidebar-bg:               #1a1a2e;
-
-        --font-headline: 'Newsreader', serif;
-        --font-body:     'Inter', sans-serif;
-
-        --shadow-editorial: 0 32px 64px -12px rgba(26,28,26,0.06);
-    }
-
-    /* ── Base ── */
-    html, body, [class*="css"], .stApp {
-        font-family: var(--font-body) !important;
-        background-color: var(--surface) !important;
-        color: var(--on-surface) !important;
-    }
-
-    .main, .block-container {
-        background-color: var(--surface) !important;
-        padding-top: 2.5rem !important;
-        padding-bottom: 4rem !important;
-    }
-
-    /* ── Sidebar ── */
-    section[data-testid="stSidebar"] {
-        background-color: var(--sidebar-bg) !important;
-    }
-    section[data-testid="stSidebar"] > div {
-        background-color: var(--sidebar-bg) !important;
-        padding-top: 2rem !important;
-    }
-    /* ── Sidebar base ── */
-    section[data-testid="stSidebar"] {
-        background-color: var(--sidebar-bg) !important;
-    }
-    section[data-testid="stSidebar"] > div {
-        background-color: var(--sidebar-bg) !important;
-        padding-top: 2rem !important;
-    }
-    section[data-testid="stSidebar"] p,
-    section[data-testid="stSidebar"] span,
-    section[data-testid="stSidebar"] div {
-        font-family: var(--font-body) !important;
-    }
-    /* ── Sidebar radio nav ── */
-    /* hide the generated label above the radio group */
-    section[data-testid="stSidebar"] .stRadio > div:first-child {
-        display: none !important;
-    }
-    /* each radio option wrapper */
-    section[data-testid="stSidebar"] .stRadio > div > div {
-        gap: 0 !important;
-    }
-    /* the clickable label row */
-    section[data-testid="stSidebar"] .stRadio label {
-        display: flex !important;
-        align-items: center !important;
-        padding: 11px 16px !important;
-        border-radius: 8px !important;
-        cursor: pointer !important;
-        color: #94a3b8 !important;
-        font-size: 14px !important;
-        font-weight: 400 !important;
-        transition: background 0.15s, color 0.15s !important;
-        width: 100% !important;
-        margin: 1px 0 !important;
-    }
-    section[data-testid="stSidebar"] .stRadio label:hover {
-        color: #ffffff !important;
-        background: rgba(255,255,255,0.05) !important;
-    }
-    /* hide the actual circle dot */
-    section[data-testid="stSidebar"] .stRadio label > div:first-child {
-        display: none !important;
-    }
-    /* the text span */
-    section[data-testid="stSidebar"] .stRadio label > div:last-child p,
-    section[data-testid="stSidebar"] .stRadio label > div:last-child {
-        color: inherit !important;
-        font-size: 14px !important;
-        font-weight: inherit !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-    /* selected state — input:checked sibling label */
-    section[data-testid="stSidebar"] .stRadio [data-testid="stMarkdownContainer"] + label,
-    section[data-testid="stSidebar"] .stRadio input[type="radio"]:checked + div label,
-    section[data-testid="stSidebar"] .stRadio label:has(input:checked) {
-        color: #ffffff !important;
-        background: rgba(177,12,105,0.15) !important;
-        border-right: 3px solid #b10c69 !important;
-        font-weight: 500 !important;
-    }
-    /* sidebar hr */
-    section[data-testid="stSidebar"] hr {
-        border-color: rgba(255,255,255,0.08) !important;
-        margin: 16px 0 !important;
-    }
-
-    /* Hide sidebar collapse button */
+/* hide collapse button */
 button[data-testid="collapsedControl"] {
     display: none !important;
 }
 
-/* Prevent sidebar from collapsing */
-section[data-testid="stSidebar"] {
-    min-width: 260px !important;
-    max-width: 260px !important;
+/* sidebar text */
+section[data-testid="stSidebar"] * {
+    color: #111827 !important;
 }
 
-    /* ── Hero title ── */
-    .cs-hero-title {
-        font-family: var(--font-headline);
-        font-size: clamp(2.5rem, 5vw, 3.75rem);
-        color: var(--on-surface);
-        line-height: 1.1;
-        letter-spacing: -0.02em;
-        margin-bottom: 1rem;
-    }
-    .cs-hero-title .accent {
-        color: var(--primary);
-        font-style: italic;
-    }
-    .cs-hero-sub {
-        font-size: 1.1rem;
-        color: var(--on-surface-variant);
-        font-weight: 300;
-        line-height: 1.65;
-        max-width: 42ch;
-        margin-bottom: 2rem;
-    }
+/* radio buttons clean */
+section[data-testid="stSidebar"] .stRadio label {
+    font-size: 14px;
+    padding: 8px 0;
+}
 
-    /* ── Section labels ── */
-    .cs-eyebrow {
-        font-size: 0.6875rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.2em;
-        color: var(--primary);
-        margin-bottom: 0.375rem;
-    }
-    .cs-section-title {
-        font-family: var(--font-headline);
-        font-size: 1.75rem;
-        color: var(--on-surface);
-        margin-bottom: 0.25rem;
-    }
-    .cs-section-sub {
-        font-size: 0.8125rem;
-        color: var(--on-surface-variant);
-        margin-bottom: 1.5rem;
-    }
+/* ===== CARDS ===== */
+.metric-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
 
-    /* ── Metric / Bento card ── */
-    .cs-metric-card {
-        background: var(--surface-container-lowest);
-        border-radius: 12px;
-        padding: 28px;
-        border: 1px solid rgba(222,190,200,0.12);
-        box-shadow: var(--shadow-editorial);
-        margin-bottom: 0;
-    }
-    .cs-metric-label {
-        font-size: 0.6875rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.18em;
-        color: var(--on-surface-variant);
-        margin-bottom: 14px;
-    }
-    .cs-metric-value {
-        font-family: var(--font-headline);
-        font-size: 2.75rem;
-        color: var(--on-surface);
-        line-height: 1;
-        margin-bottom: 4px;
-    }
-    .cs-metric-sub {
-        font-size: 0.75rem;
-        color: var(--on-surface-variant);
-    }
+/* ===== TITLES ===== */
+.hero-title {
+    font-size: 42px;
+    font-weight: 700;
+    color: #111827;
+}
 
-    /* ── Model card ── */
-    .cs-model-card {
-        background: var(--surface-container-lowest);
-        border-radius: 12px;
-        padding: 24px 28px;
-        border: 1px solid rgba(222,190,200,0.10);
-        box-shadow: var(--shadow-editorial);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 12px;
-        transition: transform 0.18s ease;
-    }
-    .cs-model-card:hover { transform: scale(1.008); }
-    .cs-model-card .icon-wrap {
-        width: 52px; height: 52px;
-        border-radius: 50%;
-        display: flex; align-items: center; justify-content: center;
-        margin-right: 18px;
-        flex-shrink: 0;
-    }
-    .cs-model-card .title { font-family: var(--font-headline); font-size: 1.2rem; }
-    .cs-model-card .subtitle { font-size: 0.75rem; color: var(--on-surface-variant); }
-    .cs-model-card .acc { font-family: var(--font-headline); font-size: 2rem; line-height:1; }
-    .cs-model-card .acc-label { font-size: 0.6rem; text-transform:uppercase; letter-spacing:.12em; color: var(--on-surface-variant); }
+.hero-sub {
+    color: #6b7280;
+    margin-bottom: 24px;
+}
 
-    /* ── Progress bars (telemetry) ── */
-    .cs-telemetry {
-        background: var(--surface-container-low);
-        border-radius: 12px;
-        padding: 24px;
-        margin-top: 20px;
-    }
-    .cs-telemetry-header {
-        display: flex; justify-content: space-between; align-items: center;
-        margin-bottom: 20px;
-    }
-    .cs-telemetry-label {
-        font-size: 0.6875rem; font-weight:700; text-transform:uppercase; letter-spacing:.18em;
-    }
-    .cs-live {
-        font-size: 0.6875rem; color: var(--tertiary);
-    }
-    .cs-bar-row { display:flex; align-items:center; gap:14px; margin-bottom:14px; }
-    .cs-bar-track {
-        flex:1; height:6px; background: var(--surface-container-highest);
-        border-radius: 9999px; overflow:hidden;
-    }
-    .cs-bar-fill { height:100%; border-radius:9999px; }
-    .cs-bar-val { font-size: 0.6rem; font-weight:600; color: var(--on-surface-variant); width:28px; }
+/* ===== BUTTON ===== */
+.stButton > button {
+    background: #111827 !important;
+    color: white !important;
+    border-radius: 10px !important;
+    padding: 12px;
+    font-weight: 600;
+    border: none;
+}
 
-    /* ── Input section title ── */
-    .cs-input-eyebrow {
-        font-size: 0.6875rem; font-weight:700; text-transform:uppercase; letter-spacing:.18em;
-        color: var(--primary); padding-bottom:8px;
-        border-bottom: 1.5px solid rgba(177,12,105,0.15);
-        margin-bottom:14px;
-    }
+/* ===== INPUTS ===== */
+.stNumberInput input, .stSelectbox div {
+    border-radius: 8px !important;
+}
 
-    /* ── Result cards ── */
-    .cs-result-high {
-        background: linear-gradient(135deg,#ff6b6b,#ee5a24);
-        border-radius:14px; padding:24px; color:white; text-align:center;
-        box-shadow: 0 8px 28px rgba(238,90,36,0.28);
-    }
-    .cs-result-low {
-        background: linear-gradient(135deg,#26de81,#20bf6b);
-        border-radius:14px; padding:24px; color:white; text-align:center;
-        box-shadow: 0 8px 28px rgba(32,191,107,0.25);
-    }
-    .cs-result-model { font-size:10px; text-transform:uppercase; letter-spacing:2px; opacity:.8; margin-bottom:6px; }
-    .cs-result-icon  { font-size:32px; margin:6px 0; }
-    .cs-result-text  { font-size:17px; font-weight:600; }
-
-    /* ── Consensus box ── */
-    .cs-consensus-high {
-        background: #fff5f5; border:2px solid #ff6b6b; border-radius:14px;
-        padding:24px; text-align:center; margin-top:20px;
-    }
-    .cs-consensus-low {
-        background: #f0fff4; border:2px solid #26de81; border-radius:14px;
-        padding:24px; text-align:center; margin-top:20px;
-    }
-    .cs-consensus-icon  { font-size:30px; }
-    .cs-consensus-title {
-        font-family: var(--font-headline); font-size:1.375rem;
-        margin: 8px 0 4px;
-    }
-    .cs-consensus-sub { font-size:13px; color: var(--on-surface-variant); }
-
-    /* ── Perf metric card ── */
-    .cs-perf-card {
-        background: var(--surface-container-lowest);
-        border-radius:12px; padding:22px 24px;
-        border: 1px solid rgba(222,190,200,0.10);
-        box-shadow: var(--shadow-editorial);
-        margin-bottom:0;
-    }
-    .cs-perf-acc {
-        font-family: var(--font-headline); font-size:2.25rem; line-height:1; margin:10px 0 14px;
-    }
-    .cs-perf-grid {
-        display:grid; grid-template-columns:1fr 1fr; gap:10px;
-        border-top:1px solid var(--surface-container-high); padding-top:12px; margin-top:4px;
-    }
-    .cs-perf-stat .label { font-size:0.625rem; text-transform:uppercase; letter-spacing:.14em; color: var(--on-surface-variant); }
-    .cs-perf-stat .val   { font-size:1rem; font-weight:600; color: var(--on-surface); margin-top:2px; }
-
-    /* ── About card ── */
-    .cs-about-card {
-        background: var(--surface-container-lowest);
-        border-radius:12px; padding:28px 30px;
-        border: 1px solid rgba(222,190,200,0.10);
-        box-shadow: var(--shadow-editorial);
-    }
-    .cs-uni-badge {
-        display:flex; align-items:center; gap:14px;
-        border-top: 1px solid rgba(222,190,200,0.18); padding-top:18px; margin-top:20px;
-    }
-    .cs-uni-icon {
-        width:44px; height:44px; border-radius:8px;
-        background: var(--surface-container);
-        display:flex; align-items:center; justify-content:center;
-        font-size:20px; flex-shrink:0;
-    }
-    .cs-uni-name { font-size:0.8125rem; font-weight:700; color: var(--on-surface); }
-    .cs-uni-sub  { font-size:0.625rem; text-transform:uppercase; letter-spacing:.1em; color: var(--on-surface-variant); }
-
-    /* ── Divider ── */
-    .cs-divider { height:1px; background: rgba(222,190,200,0.18); margin:2rem 0; }
-
-    /* ── Buttons ── */
-    .stButton > button {
-        background: linear-gradient(135deg, var(--primary), var(--primary-container)) !important;
-        color: white !important;
-        border: none !important;
-        border-radius: 12px !important;
-        padding: 14px 28px !important;
-        font-size: 15px !important;
-        font-weight: 600 !important;
-        font-family: var(--font-body) !important;
-        width: 100% !important;
-        box-shadow: 0 4px 18px rgba(177,12,105,0.25) !important;
-        transition: all 0.2s ease !important;
-        letter-spacing: 0.01em !important;
-    }
-    .stButton > button:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 8px 28px rgba(177,12,105,0.35) !important;
-    }
-
-    /* ── Inputs ── */
-    .stNumberInput > div > div > input,
-    .stSelectbox > div > div {
-        border-radius: 10px !important;
-        border: 1.5px solid rgba(222,190,200,0.4) !important;
-        font-family: var(--font-body) !important;
-        background: var(--surface-container-lowest) !important;
-    }
-    .stNumberInput > div > div > input:focus,
-    .stSelectbox > div > div:focus-within {
-        border-color: var(--primary) !important;
-        box-shadow: 0 0 0 3px rgba(177,12,105,0.10) !important;
-    }
-
-    /* ── Dataframe ── */
-    .stDataFrame { border-radius: 12px !important; overflow: hidden !important; }
-
-    /* ── Hide streamlit chrome ── */
-    #MainMenu { visibility: hidden; }
-    footer     { visibility: hidden; }
-    header     { visibility: hidden; }
+/* ===== REMOVE STREAMLIT STUFF ===== */
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+header {visibility: hidden;}
 </style>
 """, unsafe_allow_html=True)
 
@@ -450,13 +131,17 @@ if "page" not in st.session_state:
 
 # --- Sidebar: pure st.radio, hidden label, styled via stable p tag selectors ---
 with st.sidebar:
-    st.markdown("""
-    <div style="padding:8px 4px 4px 4px">
-        <div style="font-family:'Newsreader',serif;font-size:26px;color:#fff;letter-spacing:-0.01em">CardioSense AI</div>
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.22em;color:#b10c69;margin-top:2px">Clinical Precision</div>
-    </div>
-    <hr style="border-color:rgba(255,255,255,0.08);margin:16px 0">
-    """, unsafe_allow_html=True)
+    st.markdown("## 🫀 CardioSense")
+    st.markdown("AI Heart Disease Predictor")
+    st.markdown("---")
+
+    page = st.radio(
+        "Navigation",
+        ["Home", "Predict", "Model Performance", "Dataset Overview"]
+    )
+
+    st.markdown("---")
+    st.caption("TARUMT AI Assignment")
 
     # st.radio is the only reliable Streamlit nav — we style the visible <p> elements
     page_labels = [f"{icon}  {label}" for icon, label, _ in NAV_ITEMS]

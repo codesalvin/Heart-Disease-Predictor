@@ -152,12 +152,27 @@ if df is not None:
     col_dist, col_corr = st.columns(2)
     with col_dist:
         st.markdown("### Class Distribution")
-        fig_dist, ax_dist = plt.subplots(figsize=(5, 4))
-        df['target'].value_counts().plot(kind='bar', ax=ax_dist, color=['#1a1a2e', '#b10c69'])
-        ax_dist.set_xticklabels(['No Disease', 'Disease'], rotation=0)
-        st.pyplot(fig_dist)
-        st.markdown('</div>', unsafe_allow_html=True)
-        print(df['target'].value_counts())
+    fig_dist, ax_dist = plt.subplots(figsize=(5, 4))
+    
+    # Sort by index (0, 1) so labels always match the bars
+    counts = df['target'].value_counts().sort_index() 
+    
+    # Plotting: 0 = No Disease (Navy), 1 = Has Disease (Pink)
+    counts.plot(kind='bar', ax=ax_dist, color=['#1a1a2e', '#b10c69'])
+    
+    # Setting the labels to match the 0 and 1 index
+    ax_dist.set_xticklabels(['No Disease', 'Has Disease'], rotation=0)
+    
+    # Adding the specific counts (500 and 525) on top of the bars
+    for i, v in enumerate(counts):
+        ax_dist.text(i, v + 5, str(v), ha='center', fontweight='bold', color='#1a1a2e')
+        
+    # Clean up the visual
+    ax_dist.spines['top'].set_visible(False)
+    ax_dist.spines['right'].set_visible(False)
+    
+    st.pyplot(fig_dist)
+    st.markdown('</div>', unsafe_allow_html=True)
 
     with col_corr:
         st.markdown("### Correlation Heatmap")

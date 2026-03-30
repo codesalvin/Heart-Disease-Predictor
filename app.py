@@ -153,7 +153,7 @@ if df is not None:
     with col_dist:
         st.markdown("### Class Distribution")
     # Restored to original compact size (approx 4x3 or 5x4)
-    fig_dist, ax_dist = plt.subplots(figsize=(4, 3.2)) 
+    fig_dist, ax_dist = plt.subplots(figsize=(5, 4)) 
     
     # Sort to ensure 0 is left and 1 is right
     counts = df['target'].value_counts().sort_index() 

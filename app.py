@@ -96,62 +96,72 @@ st.markdown("""
         background-color: var(--sidebar-bg) !important;
         padding-top: 2rem !important;
     }
-    section[data-testid="stSidebar"] * {
-        color: #e2e0fc !important;
+    /* ── Sidebar base ── */
+    section[data-testid="stSidebar"] {
+        background-color: var(--sidebar-bg) !important;
+    }
+    section[data-testid="stSidebar"] > div {
+        background-color: var(--sidebar-bg) !important;
+        padding-top: 2rem !important;
+    }
+    section[data-testid="stSidebar"] p,
+    section[data-testid="stSidebar"] span,
+    section[data-testid="stSidebar"] div {
         font-family: var(--font-body) !important;
+    }
+    /* ── Sidebar radio nav ── */
+    /* hide the generated label above the radio group */
+    section[data-testid="stSidebar"] .stRadio > div:first-child {
+        display: none !important;
+    }
+    /* each radio option wrapper */
+    section[data-testid="stSidebar"] .stRadio > div > div {
+        gap: 0 !important;
+    }
+    /* the clickable label row */
+    section[data-testid="stSidebar"] .stRadio label {
+        display: flex !important;
+        align-items: center !important;
+        padding: 11px 16px !important;
+        border-radius: 8px !important;
+        cursor: pointer !important;
+        color: #94a3b8 !important;
+        font-size: 14px !important;
+        font-weight: 400 !important;
+        transition: background 0.15s, color 0.15s !important;
+        width: 100% !important;
+        margin: 1px 0 !important;
+    }
+    section[data-testid="stSidebar"] .stRadio label:hover {
+        color: #ffffff !important;
+        background: rgba(255,255,255,0.05) !important;
+    }
+    /* hide the actual circle dot */
+    section[data-testid="stSidebar"] .stRadio label > div:first-child {
+        display: none !important;
+    }
+    /* the text span */
+    section[data-testid="stSidebar"] .stRadio label > div:last-child p,
+    section[data-testid="stSidebar"] .stRadio label > div:last-child {
+        color: inherit !important;
+        font-size: 14px !important;
+        font-weight: inherit !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    /* selected state — input:checked sibling label */
+    section[data-testid="stSidebar"] .stRadio [data-testid="stMarkdownContainer"] + label,
+    section[data-testid="stSidebar"] .stRadio input[type="radio"]:checked + div label,
+    section[data-testid="stSidebar"] .stRadio label:has(input:checked) {
+        color: #ffffff !important;
+        background: rgba(177,12,105,0.15) !important;
+        border-right: 3px solid #b10c69 !important;
+        font-weight: 500 !important;
     }
     /* sidebar hr */
     section[data-testid="stSidebar"] hr {
         border-color: rgba(255,255,255,0.08) !important;
         margin: 16px 0 !important;
-    }
-    /* nav buttons */
-    section[data-testid="stSidebar"] .stButton > button {
-        background: transparent !important;
-        color: #94a3b8 !important;
-        border: none !important;
-        border-radius: 8px !important;
-        padding: 10px 16px !important;
-        font-size: 14px !important;
-        font-weight: 400 !important;
-        width: 100% !important;
-        text-align: left !important;
-        box-shadow: none !important;
-        transition: all 0.18s ease !important;
-        justify-content: flex-start !important;
-        letter-spacing: 0 !important;
-    }
-    section[data-testid="stSidebar"] .stButton > button:hover {
-        color: #ffffff !important;
-        background: rgba(255,255,255,0.05) !important;
-        transform: none !important;
-        box-shadow: none !important;
-    }
-    /* active nav button */
-    section[data-testid="stSidebar"] .nav-active > button,
-    section[data-testid="stSidebar"] .nav-active > button:hover {
-        color: #ffffff !important;
-        background: rgba(177,12,105,0.15) !important;
-        border-right: 3px solid #b10c69 !important;
-        font-weight: 500 !important;
-        box-shadow: none !important;
-        transform: none !important;
-    }
-    /* new analysis CTA button — keep gradient only here */
-    section[data-testid="stSidebar"] .nav-cta > button {
-        background: linear-gradient(135deg, #b10c69, #d33182) !important;
-        color: white !important;
-        border-radius: 12px !important;
-        font-weight: 600 !important;
-        box-shadow: 0 4px 14px rgba(177,12,105,0.3) !important;
-        text-align: center !important;
-        justify-content: center !important;
-        margin-top: 8px !important;
-    }
-    section[data-testid="stSidebar"] .nav-cta > button:hover {
-        opacity: 0.9 !important;
-        transform: translateY(-1px) !important;
-        box-shadow: 0 6px 18px rgba(177,12,105,0.4) !important;
     }
 
     /* ── Hero title ── */
@@ -419,45 +429,39 @@ df = load_data()
 
 # --- Session state nav ---
 NAV_ITEMS = [
-    ("🏠  Home",             "Home"),
-    ("🔍  Predict",          "Predict"),
-    ("📊  Model Performance","Model Performance"),
-    ("📈  Dataset Overview", "Dataset Overview"),
+    ("🏠", "Home",             "Home"),
+    ("🔍", "Predict",          "Predict"),
+    ("📊", "Model Performance","Model Performance"),
+    ("📈", "Dataset Overview", "Dataset Overview"),
 ]
 if "page" not in st.session_state:
     st.session_state.page = "Home"
 
-# --- Sidebar ---
+# --- Sidebar: pure st.radio, hidden label, styled via stable p tag selectors ---
 with st.sidebar:
     st.markdown("""
-    <div style="padding:8px 16px 4px">
+    <div style="padding:8px 4px 4px 4px">
         <div style="font-family:'Newsreader',serif;font-size:26px;color:#fff;letter-spacing:-0.01em">CardioSense AI</div>
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.22em;
-                    color:#b10c69;margin-top:2px">Clinical Precision</div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.22em;color:#b10c69;margin-top:2px">Clinical Precision</div>
     </div>
+    <hr style="border-color:rgba(255,255,255,0.08);margin:16px 0">
     """, unsafe_allow_html=True)
-    st.markdown("---")
 
-    for label, key in NAV_ITEMS:
-        active = st.session_state.page == key
-        col_class = "nav-active" if active else "nav-inactive"
-        with st.container():
-            st.markdown(f'<div class="{col_class}">', unsafe_allow_html=True)
-            if st.button(label, key=f"nav_{key}"):
-                st.session_state.page = key
-                st.rerun()
-            st.markdown('</div>', unsafe_allow_html=True)
+    # st.radio is the only reliable Streamlit nav — we style the visible <p> elements
+    page_labels = [f"{icon}  {label}" for icon, label, _ in NAV_ITEMS]
+    page_keys   = {f"{icon}  {label}": key for icon, label, key in NAV_ITEMS}
 
-    st.markdown("---")
-    with st.container():
-        st.markdown('<div class="nav-cta">', unsafe_allow_html=True)
-        if st.button("✦  New Analysis", key="nav_new"):
-            st.session_state.page = "Predict"
-            st.rerun()
-        st.markdown('</div>', unsafe_allow_html=True)
+    selected_label = st.radio(
+        "nav",
+        page_labels,
+        index=[k for _,_,k in NAV_ITEMS].index(st.session_state.page),
+        label_visibility="collapsed",
+    )
+    st.session_state.page = page_keys[selected_label]
 
     st.markdown("""
-    <p style="font-size:11px;color:#475569;text-align:center;padding:8px 16px 0">
+    <hr style="border-color:rgba(255,255,255,0.08);margin:16px 0">
+    <p style="font-size:11px;color:#475569;text-align:center;padding:4px 0 0">
         TARUMT AI Assignment<br>Session 202601
     </p>""", unsafe_allow_html=True)
 

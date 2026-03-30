@@ -100,7 +100,6 @@ if df is not None:
 
     col_dist, col_corr = st.columns(2)
     with col_dist:
-        st.markdown('<div class="bento-card editorial-shadow">', unsafe_allow_html=True)
         st.markdown("### Class Distribution")
         fig_dist, ax_dist = plt.subplots(figsize=(5, 4))
         df['target'].value_counts().plot(kind='bar', ax=ax_dist, color=['#1a1a2e', '#b10c69'])
@@ -109,14 +108,12 @@ if df is not None:
         st.markdown('</div>', unsafe_allow_html=True)
 
     with col_corr:
-        st.markdown('<div class="bento-card editorial-shadow">', unsafe_allow_html=True)
         st.markdown("### Correlation Heatmap")
         fig_corr, ax_corr = plt.subplots(figsize=(5, 4))
         sns.heatmap(df.corr(), annot=False, cmap='RdBu_r', ax=ax_corr)
         st.pyplot(fig_corr)
         st.markdown('</div>', unsafe_allow_html=True)
 
-    st.markdown('<div class="bento-card editorial-shadow">', unsafe_allow_html=True)
     st.markdown("### Feature Frequency Distributions")
     fig_hist, axes = plt.subplots(3, 5, figsize=(15, 9))
     axes = axes.flatten()
@@ -133,7 +130,6 @@ st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
 st.markdown('<h2 style="font-size: 3rem; text-align: center;">Predictive Diagnostic</h2>', unsafe_allow_html=True)
 
 with st.container():
-    st.markdown('<div class="bento-card editorial-shadow">', unsafe_allow_html=True)
     col1, col2, col3 = st.columns(3)
     with col1:
         age = st.number_input("Age", 20, 100, 50)
@@ -188,7 +184,6 @@ results = pd.DataFrame({
     'F1 Score': [84.40, 89.40, 98.52]
 })
 
-st.markdown('<div class="bento-card editorial-shadow">', unsafe_allow_html=True)
 st.markdown("### Evaluation Metrics Comparison")
 st.dataframe(results.style.highlight_max(axis=0, color='#debec8'), use_container_width=True)
 
@@ -218,7 +213,6 @@ cm_data = {
 col_cm1, col_cm2, col_cm3 = st.columns(3)
 for col, (model_name, cm) in zip([col_cm1, col_cm2, col_cm3], cm_data.items()):
     with col:
-        st.markdown('<div class="bento-card editorial-shadow" style="padding: 1.5rem;">', unsafe_allow_html=True)
         fig_cm, ax_cm = plt.subplots(figsize=(4, 3))
         sns.heatmap(cm, annot=True, fmt='d', cmap='PuRd', ax=ax_cm, cbar=False)
         ax_cm.set_title(f'{model_name}')

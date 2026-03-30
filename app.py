@@ -62,7 +62,6 @@ st.markdown("""
     footer {visibility: hidden;}
     header {visibility: hidden;}
 </style>
-""", unsafe_allow_html=True)
 
 # --- LOAD MODELS ---
 @st.cache_resource

@@ -14,48 +14,87 @@ st.set_page_config(
 
 st.markdown("""
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
+
 <style>
-    .stApp { background-color: #faf9f6; color: #1a1c1a; font-family: 'Inter', sans-serif; }
-    h1, h2, h3, h4 { font-family: 'Newsreader', serif !important; letter-spacing: -0.02em; }
-    
+    .stApp {
+        background-color: #faf9f6;
+        color: #1a1c1a;
+        font-family: 'Inter', sans-serif;
+    }
+
+    h1, h2, h3, h4 {
+        font-family: 'Newsreader', serif !important;
+        letter-spacing: -0.02em;
+    }
+
     /* Hide Sidebar */
-    [data-testid="stSidebar"], [data-testid="collapsedControl"] { display: none; }
+    [data-testid="stSidebar"], [data-testid="collapsedControl"] {
+        display: none;
+    }
 
     /* Bento Grid & Card Styling */
-    .editorial-shadow { box-shadow: 0 32px 64px -12px rgba(26, 28, 26, 0.06); }
+    .editorial-shadow {
+        box-shadow: 0 32px 64px -12px rgba(26, 28, 26, 0.06);
+    }
+
     .bento-card {
-        background: #ffffff; padding: 2rem; border-radius: 0.75rem; 
-        border: 1px solid rgba(222, 190, 200, 0.3); margin-bottom: 1.5rem;
+        background: #ffffff;
+        padding: 2rem;
+        border-radius: 0.75rem;
+        border: 1px solid rgba(222, 190, 200, 0.3);
+        margin-bottom: 1.5rem;
     }
-    .label-caps { 
-        font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; 
-        color: #b10c69; font-weight: 700; margin-bottom: 1rem; 
+
+    .label-caps {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: #b10c69;
+        font-weight: 700;
+        margin-bottom: 1rem;
     }
-    
+
     .section-divider {
         margin: 4rem 0 2rem 0;
         border-bottom: 1px solid #debec8;
         opacity: 0.4;
     }
 
-    .res-box { text-align:center; border-radius: 1rem; padding: 1.5rem; border: 1px solid #efeeeb; background: white; }
+    .res-box {
+        text-align: center;
+        border-radius: 1rem;
+        padding: 1.5rem;
+        border: 1px solid #efeeeb;
+        background: white;
+    }
 
+    /* ============================= */
+    /* FORCE LABELS + INPUT TEXT BLACK */
+    /* ============================= */
+
+    /* All widget labels */
+    label {
+        color: #000000 !important;
+    }
+
+    /* More specific Streamlit selectors */
+    [data-testid="stNumberInput"] label,
+    [data-testid="stSelectbox"] label,
+    [data-testid="stSlider"] label,
+    [data-testid="stTextInput"] label {
+        color: #000000 !important;
+    }
+
+    /* Input text color */
+    input, select, textarea {
+        color: #000000 !important;
+    }
+
+    /* Sidebar + header cleanup */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
 
-    /* Make all input labels black */
-label {
-    color: #000000 !important;
-}
-
-/* More specific Streamlit selectors (recommended) */
-[data-testid="stNumberInput"] label,
-[data-testid="stSelectbox"] label,
-[data-testid="stSlider"] label,
-[data-testid="stTextInput"] label {
-    color: #000000 !important;
-}
 </style>
 """, unsafe_allow_html=True)
 

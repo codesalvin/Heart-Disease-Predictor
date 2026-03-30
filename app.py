@@ -178,29 +178,51 @@ if df is not None:
 
 # ==================== SECTION 4: PREDICTION ====================
 st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
-st.markdown('<h2 style="font-size: 3rem; text-align: center;">Predict now</h2>', unsafe_allow_html=True)
+st.markdown('<h2 style="font-size: 3rem; text-align: center;">Enter patient details</h2>', unsafe_allow_html=True)
 
 with st.container():
     col1, col2, col3 = st.columns(3)
     with col1:
         age = st.number_input("Age", 20, 100, 50)
         sex = st.selectbox("Sex", [0, 1], format_func=lambda x: "Female" if x == 0 else "Male")
-        cp = st.selectbox("Chest Pain Type (0-3)", [0,1,2,3])
+        cp = st.selectbox("Chest Pain Type", [0, 1, 2, 3], 
+                          format_func=lambda x: {
+                              0: "0: Typical Angina", 
+                              1: "1: Atypical Angina", 
+                              2: "2: Non-anginal Pain", 
+                              3: "3: Asymptomatic"
+                          }[x])
         trestbps = st.number_input("Resting Blood Pressure", 80, 200, 120)
     with col2:
         chol = st.number_input("Cholesterol", 100, 600, 200)
         fbs = st.selectbox("Fasting Blood Sugar > 120", [0,1])
-        restecg = st.selectbox("Resting ECG (0-2)", [0,1,2])
+        restecg = st.selectbox("Resting ECG", [0, 1, 2], 
+                               format_func=lambda x: {
+                                   0: "0: Normal", 
+                                   1: "1: ST-T Wave Abnormality", 
+                                   2: "2: Left Ventricular Hypertrophy"
+                               }[x])
         thalach = st.number_input("Max Heart Rate", 60, 220, 150)
     with col3:
         exang = st.selectbox("Exercise Induced Angina", [0,1])
         oldpeak = st.number_input("ST Depression", 0.0, 7.0, 1.0)
-        slope = st.selectbox("Slope of ST Segment", [0,1,2])
+        slope = st.selectbox("Slope of ST Segment", [0, 1, 2], 
+                             format_func=lambda x: {
+                                 0: "0: Upsloping", 
+                                 1: "1: Flat", 
+                                 2: "2: Downsloping"
+                             }[x])
         ca = st.selectbox("Major Vessels (0-3)", [0,1,2,3])
-        thal = st.selectbox("Thalassemia (0-3)", [0,1,2,3])
+        thal = st.selectbox("Thalassemia", [0, 1, 2, 3], 
+                            format_func=lambda x: {
+                                0: "0: Unknown", 
+                                1: "1: Fixed Defect", 
+                                2: "2: Normal", 
+                                3: "3: Reversible Defect"
+                            }[x])
     
     st.markdown("<br>", unsafe_allow_html=True)
-    predict_btn = st.button("EXECUTE ANALYSIS", use_container_width=True, type="primary")
+    predict_btn = st.button("Predict now", use_container_width=True, type="primary")
     st.markdown('</div>', unsafe_allow_html=True)
 
 if predict_btn:

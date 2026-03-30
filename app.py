@@ -100,46 +100,58 @@ st.markdown("""
         color: #e2e0fc !important;
         font-family: var(--font-body) !important;
     }
-    section[data-testid="stSidebar"] .stRadio > label {
-        display: none !important;
-    }
-    section[data-testid="stSidebar"] .stRadio div[role="radiogroup"] {
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-    }
-    section[data-testid="stSidebar"] .stRadio label[data-baseweb="radio"] {
-        display: flex !important;
-        align-items: center !important;
-        gap: 12px !important;
-        padding: 10px 16px !important;
-        border-radius: 8px !important;
-        cursor: pointer !important;
-        color: #94a3b8 !important;
-        font-size: 14px !important;
-        font-weight: 400 !important;
-        transition: all 0.18s ease !important;
-        border: none !important;
-        background: transparent !important;
-    }
-    section[data-testid="stSidebar"] .stRadio label[data-baseweb="radio"]:hover {
-        color: #ffffff !important;
-        background: rgba(255,255,255,0.05) !important;
-    }
-    section[data-testid="stSidebar"] .stRadio label[data-baseweb="radio"][aria-checked="true"] {
-        color: #ffffff !important;
-        background: rgba(177,12,105,0.12) !important;
-        border-right: 3px solid var(--primary) !important;
-        font-weight: 500 !important;
-    }
-    /* hide the actual radio dot */
-    section[data-testid="stSidebar"] .stRadio span[data-baseweb="radio"] {
-        display: none !important;
-    }
     /* sidebar hr */
     section[data-testid="stSidebar"] hr {
         border-color: rgba(255,255,255,0.08) !important;
         margin: 16px 0 !important;
+    }
+    /* nav buttons */
+    section[data-testid="stSidebar"] .stButton > button {
+        background: transparent !important;
+        color: #94a3b8 !important;
+        border: none !important;
+        border-radius: 8px !important;
+        padding: 10px 16px !important;
+        font-size: 14px !important;
+        font-weight: 400 !important;
+        width: 100% !important;
+        text-align: left !important;
+        box-shadow: none !important;
+        transition: all 0.18s ease !important;
+        justify-content: flex-start !important;
+        letter-spacing: 0 !important;
+    }
+    section[data-testid="stSidebar"] .stButton > button:hover {
+        color: #ffffff !important;
+        background: rgba(255,255,255,0.05) !important;
+        transform: none !important;
+        box-shadow: none !important;
+    }
+    /* active nav button */
+    section[data-testid="stSidebar"] .nav-active > button,
+    section[data-testid="stSidebar"] .nav-active > button:hover {
+        color: #ffffff !important;
+        background: rgba(177,12,105,0.15) !important;
+        border-right: 3px solid #b10c69 !important;
+        font-weight: 500 !important;
+        box-shadow: none !important;
+        transform: none !important;
+    }
+    /* new analysis CTA button — keep gradient only here */
+    section[data-testid="stSidebar"] .nav-cta > button {
+        background: linear-gradient(135deg, #b10c69, #d33182) !important;
+        color: white !important;
+        border-radius: 12px !important;
+        font-weight: 600 !important;
+        box-shadow: 0 4px 14px rgba(177,12,105,0.3) !important;
+        text-align: center !important;
+        justify-content: center !important;
+        margin-top: 8px !important;
+    }
+    section[data-testid="stSidebar"] .nav-cta > button:hover {
+        opacity: 0.9 !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 6px 18px rgba(177,12,105,0.4) !important;
     }
 
     /* ── Hero title ── */
@@ -405,6 +417,16 @@ def load_data():
 knn, svm, ann, scaler = load_models()
 df = load_data()
 
+# --- Session state nav ---
+NAV_ITEMS = [
+    ("🏠  Home",             "Home"),
+    ("🔍  Predict",          "Predict"),
+    ("📊  Model Performance","Model Performance"),
+    ("📈  Dataset Overview", "Dataset Overview"),
+]
+if "page" not in st.session_state:
+    st.session_state.page = "Home"
+
 # --- Sidebar ---
 with st.sidebar:
     st.markdown("""
@@ -416,18 +438,30 @@ with st.sidebar:
     """, unsafe_allow_html=True)
     st.markdown("---")
 
-    page = st.radio("", [
-        "🏠  Home",
-        "🔍  Predict",
-        "📊  Model Performance",
-        "📈  Dataset Overview"
-    ], label_visibility="collapsed")
+    for label, key in NAV_ITEMS:
+        active = st.session_state.page == key
+        col_class = "nav-active" if active else "nav-inactive"
+        with st.container():
+            st.markdown(f'<div class="{col_class}">', unsafe_allow_html=True)
+            if st.button(label, key=f"nav_{key}"):
+                st.session_state.page = key
+                st.rerun()
+            st.markdown('</div>', unsafe_allow_html=True)
 
     st.markdown("---")
+    with st.container():
+        st.markdown('<div class="nav-cta">', unsafe_allow_html=True)
+        if st.button("✦  New Analysis", key="nav_new"):
+            st.session_state.page = "Predict"
+            st.rerun()
+        st.markdown('</div>', unsafe_allow_html=True)
+
     st.markdown("""
-    <p style="font-size:11px;color:#475569;text-align:center;padding:0 16px">
+    <p style="font-size:11px;color:#475569;text-align:center;padding:8px 16px 0">
         TARUMT AI Assignment<br>Session 202601
     </p>""", unsafe_allow_html=True)
+
+page = st.session_state.page
 
 # ── helper ──────────────────────────────────────────────────────
 def metric_card(label, value, sub="", accent_color=None):
@@ -440,7 +474,7 @@ def metric_card(label, value, sub="", accent_color=None):
     </div>"""
 
 # ==================== HOME ====================
-if page == "🏠  Home":
+if page == "Home":
 
     st.markdown("""
     <div class="cs-hero-title">
@@ -547,7 +581,7 @@ if page == "🏠  Home":
         """, unsafe_allow_html=True)
 
 # ==================== PREDICT ====================
-elif page == "🔍  Predict":
+elif page == "Predict":
     st.markdown("""
     <div class="cs-hero-title">Patient Risk Assessment</div>
     <div class="cs-hero-sub">Enter clinical data to receive predictions from all three models.</div>
@@ -630,7 +664,7 @@ elif page == "🔍  Predict":
             </div>""", unsafe_allow_html=True)
 
 # ==================== MODEL PERFORMANCE ====================
-elif page == "📊  Model Performance":
+elif page == "Model Performance":
     st.markdown("""
     <div class="cs-hero-title">Model Performance</div>
     <div class="cs-hero-sub">Evaluation metrics comparison across all three classifiers.</div>
@@ -718,7 +752,7 @@ elif page == "📊  Model Performance":
             plt.tight_layout(); st.pyplot(fig)
 
 # ==================== DATASET OVERVIEW ====================
-elif page == "📈  Dataset Overview":
+elif page == "Dataset Overview":
     st.markdown("""
     <div class="cs-hero-title">Dataset Overview</div>
     <div class="cs-hero-sub">UCI Heart Disease Dataset — 1,025 patient records, 13 clinical features.</div>

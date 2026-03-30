@@ -164,6 +164,17 @@ st.markdown("""
         margin: 16px 0 !important;
     }
 
+    /* Hide sidebar collapse button */
+button[data-testid="collapsedControl"] {
+    display: none !important;
+}
+
+/* Prevent sidebar from collapsing */
+section[data-testid="stSidebar"] {
+    min-width: 260px !important;
+    max-width: 260px !important;
+}
+
     /* ── Hero title ── */
     .cs-hero-title {
         font-family: var(--font-headline);

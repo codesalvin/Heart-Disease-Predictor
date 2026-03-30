@@ -16,31 +16,53 @@ st.set_page_config(
 st.markdown("""
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
 <style>
-    .stApp { background-color: #faf9f6; color: #1a1c1a; font-family: 'Inter', sans-serif; }
-    h1, h2, h3, h4 { font-family: 'Newsreader', serif !important; letter-spacing: -0.02em; }
-    
-    /* Hide Sidebar */
-    [data-testid="stSidebar"], [data-testid="collapsedControl"] { display: none; }
-
-    /* Bento Grid & Card Styling */
-    .editorial-shadow { box-shadow: 0 32px 64px -12px rgba(26, 28, 26, 0.06); }
-    .bento-card {
-        background: #ffffff; padding: 2rem; border-radius: 0.75rem; 
-        border: 1px solid rgba(222, 190, 200, 0.3); margin-bottom: 1.5rem;
+    /* 1. Global Text Color Force */
+    .stApp { 
+        background-color: #faf9f6; 
+        color: #000000 !important; 
+        font-family: 'Inter', sans-serif; 
     }
+
+    /* 2. Headlines (Black) */
+    h1, h2, h3, h4, p, span { 
+        font-family: 'Newsreader', serif !important; 
+        color: #000000 !important;
+        letter-spacing: -0.02em; 
+    }
+
+    /* 3. Streamlit Input Labels (Age, Sex, etc.) */
+    .stWidgetLabel p {
+        color: #000000 !important;
+        font-weight: 600 !important;
+        font-size: 0.9rem !important;
+    }
+
+    /* 4. Selectbox and Number Input Text */
+    div[data-baseweb="select"] > div, div[data-baseweb="input"] input {
+        color: #000000 !important;
+    }
+
+    /* Keep your specific accent colors for branding */
     .label-caps { 
-        font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; 
-        color: #b10c69; font-weight: 700; margin-bottom: 1rem; 
+        font-size: 0.75rem; 
+        text-transform: uppercase; 
+        letter-spacing: 0.15em; 
+        color: #b10c69 !important; /* This stays pink for branding */
+        font-weight: 700; 
+        margin-bottom: 1rem; 
     }
+
+    .bento-card {
+        background: #ffffff; 
+        padding: 2rem; 
+        border-radius: 0.75rem; 
+        border: 1px solid rgba(0, 0, 0, 0.1); 
+        margin-bottom: 1.5rem;
+    }
+
+    .editorial-shadow { box-shadow: 0 32px 64px -12px rgba(0, 0, 0, 0.1); }
     
-    .section-divider {
-        margin: 4rem 0 2rem 0;
-        border-bottom: 1px solid #debec8;
-        opacity: 0.4;
-    }
-
-    .res-box { text-align:center; border-radius: 1rem; padding: 1.5rem; border: 1px solid #efeeeb; background: white; }
-
+    [data-testid="stSidebar"], [data-testid="collapsedControl"] { display: none; }
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}

@@ -199,7 +199,8 @@ with st.container():
         trestbps = st.number_input("Resting Blood Pressure", 80, 200, 120)
     with col2:
         chol = st.number_input("Cholesterol", 100, 600, 200)
-        fbs = st.selectbox("Fasting Blood Sugar > 120", [0,1])
+        fbs = st.selectbox("Fasting Blood Sugar > 120", [0,1],
+                   format_func=lambda x: "No" if x == 0 else "Yes")
         restecg = st.selectbox("Resting ECG", [0, 1, 2], 
                                format_func=lambda x: {
                                    0: "0: Normal", 
@@ -208,7 +209,8 @@ with st.container():
                                }[x])
         thalach = st.number_input("Max Heart Rate", 60, 220, 150)
     with col3:
-        exang = st.selectbox("Exercise Induced Angina", [0,1])
+        exang = st.selectbox("Exercise Induced Angina", [0,1],
+                     format_func=lambda x: "No" if x == 0 else "Yes")
         oldpeak = st.number_input("ST Depression", 0.0, 7.0, 1.0)
         slope = st.selectbox("Slope of ST Segment", [0, 1, 2], 
                              format_func=lambda x: {
@@ -218,22 +220,22 @@ with st.container():
                              }[x])
         ca = st.selectbox("Major Vessels (0-3)", [0,1,2,3])
         thal = st.selectbox("Thalassemia", [0, 1, 2, 3], 
-                            format_func=lambda x: {
-                                0: "0: Unknown", 
-                                1: "1: Fixed Defect", 
-                                2: "2: Normal", 
-                                3: "3: Reversible Defect"
-                            }[x])
+                    format_func=lambda x: {
+                        0: "0: Normal", 
+                        1: "1: Fixed Defect", 
+                        2: "2: Reversible Defect",
+                        3: "3: Other"
+                    }[x])
     
     st.markdown("<br>", unsafe_allow_html=True)
     predict_btn = st.button("Predict now", use_container_width=True, type="primary")
     st.markdown('</div>', unsafe_allow_html=True)
-    prediction = model.predict(input_data)
-    st.write(f"Raw Model Output: {prediction}")
 
 if predict_btn:
     if scaler is not None:
-        input_data = np.array([[age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal]])
+        input_data = np.array([[age, sex, cp, trestbps, chol, fbs, 
+                        restecg, thalach, exang, oldpeak, 
+                        slope, ca, thal]], dtype=float)
         input_scaled = scaler.transform(input_data)
         
         preds = [knn.predict(input_scaled)[0], svm.predict(input_scaled)[0], ann.predict(input_scaled)[0]]

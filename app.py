@@ -102,12 +102,6 @@ st.markdown('<p class="label-caps">Data Intelligence</p>', unsafe_allow_html=Tru
 st.markdown('<h2 style="font-size: 3rem;">Dataset Overview</h2>', unsafe_allow_html=True)
 
 if df is not None:
-    # Basic Stats Metrics
-    st.markdown('<div class="bento-card editorial-shadow">', unsafe_allow_html=True)
-    m1, m2, m3 = st.columns(3)
-    m1.metric("Total Samples", len(df), delta="Verified")
-    m2.metric("Clinical Features", len(df.columns)-1, delta="Structured")
-    m3.metric("Missing Values", df.isnull().sum().sum(), delta="Clean", delta_color="normal")
     
     st.markdown("### Clinical Data Sample")
     st.dataframe(df.head(10), use_container_width=True)

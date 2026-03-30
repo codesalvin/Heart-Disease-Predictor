@@ -13,35 +13,20 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- CSS INJECTION (The "Secret Sauce" to match your HTML exactly) ---
+# --- CSS INJECTION ---
 st.markdown("""
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1" rel="stylesheet">
 <style>
-    /* Global Styles */
     .stApp { background-color: #faf9f6; color: #1a1c1a; font-family: 'Inter', sans-serif; }
-    
-    /* Typography Overrides */
     h1, h2, h3, h4, .headline { font-family: 'Newsreader', serif !important; letter-spacing: -0.02em; }
     
-    /* Custom Sidebar Styling */
-    [data-testid="stSidebar"] {
-    background-color: #1a1a2e !important;
-    width: 300px !important;
-}
-
-section[data-testid="stSidebar"] {
-    display: block !important;
-}
-
-[data-testid="collapsedControl"] {
-    display: none !important; /* remove collapse button */
-}
+    [data-testid="stSidebar"] { background-color: #1a1a2e !important; width: 300px !important; }
+    [data-testid="collapsedControl"] { display: none !important; }
+    
     .sidebar-brand { padding: 2rem 1rem; }
-    .sidebar-brand h1 { font-size: 1.5rem; margin-bottom: 0; }
     .sidebar-tagline { font-size: 0.65rem; color: #b10c69 !important; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; }
 
-    /* Editorial Shadow & Cards */
     .editorial-shadow { box-shadow: 0 32px 64px -12px rgba(26, 28, 26, 0.06); }
     .bento-card {
         background: #ffffff; padding: 2rem; border-radius: 0.75rem; 
@@ -49,13 +34,11 @@ section[data-testid="stSidebar"] {
     }
     .label-caps { font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.15em; color: #584048; font-weight: 600; margin-bottom: 1rem; }
     
-    /* Model Cards */
     .model-row {
         background: #ffffff; padding: 1.5rem; border-radius: 1rem; margin-bottom: 1rem;
         display: flex; justify-content: space-between; align-items: center; border: 1px solid #efeeeb;
     }
     
-    /* Circular Badge */
     .status-circle {
         width: 180px; height: 180px; border-radius: 50%; border: 1px solid rgba(177, 12, 105, 0.2);
         display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -63,15 +46,11 @@ section[data-testid="stSidebar"] {
         position: relative;
     }
 
-    /* Progress Bar */
-    .progress-bg { background: #e3e2df; height: 8px; border-radius: 10px; width: 100%; overflow: hidden; }
-    .progress-fill { background: #b10c69; height: 100%; border-radius: 10px; }
-
-    /* Hide Streamlit Branded Elements */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
 </style>
+""", unsafe_allow_html=True)
 
 # --- LOAD MODELS ---
 @st.cache_resource
@@ -92,17 +71,19 @@ knn, svm, ann, scaler, df = load_models()
 with st.sidebar:
     st.markdown("""
         <div style="padding: 1rem 0;">
-            <h1 style="font-family: 'Newsreader', serif; font-size: 1.8rem; margin:0;">CardioSense AI</h1>
+            <h1 style="color: white; font-family: 'Newsreader', serif; font-size: 1.8rem; margin:0;">CardioSense AI</h1>
             <p style="font-size: 0.7rem; color: #b10c69; letter-spacing: 2px; text-transform: uppercase;">Clinical Precision</p>
         </div>
     """, unsafe_allow_html=True)
     
-    page = st.radio("DASHBOARD", ["Home", "Predict", "Model Performance", "Dataset Overview"], label_visibility="collapsed")
+    page = st.radio("NAVIGATION", ["Home", "Predict", "Model Performance", "Dataset Overview"])
     
-        page = st.radio("NAVIGATION", ["Home", "Predict", "Performance", "Dataset"])
     st.markdown("---")
-    st.markdown("### System Status")
-    st.success("● Models Loaded")
+    st.markdown("<h3 style='color:white;'>System Status</h3>", unsafe_allow_html=True)
+    if knn is not None:
+        st.success("● Models Loaded")
+    else:
+        st.error("● Models Missing")
     st.info("● Database Online")
 
 # --- HEADER BREADCRUMB ---
@@ -110,7 +91,6 @@ st.markdown(f'<p class="label-caps" style="margin-left: 2rem; margin-top: 1rem;"
 
 # ==================== HOME PAGE ====================
 if page == "Home":
-    # HERO SECTION
     col1, col2 = st.columns([3, 1])
     with col1:
         st.markdown("""
@@ -132,7 +112,6 @@ if page == "Home":
             </div>
         """, unsafe_allow_html=True)
 
-    # BENTO GRID METRICS
     m1, m2, m3, m4 = st.columns(4)
     with m1:
         st.markdown('<div class="bento-card editorial-shadow"><p class="label-caps">Dataset Size</p><h3 style="font-size: 2.5rem; margin:0;">1,025 <small style="font-size: 1rem; color: gray;">Records</small></h3></div>', unsafe_allow_html=True)
@@ -143,7 +122,6 @@ if page == "Home":
     with m4:
         st.markdown('<div class="bento-card editorial-shadow"><p class="label-caps">Missing Values</p><h3 style="font-size: 2.5rem; margin:0; color: #006a39;">Zero</h3></div>', unsafe_allow_html=True)
 
-    # BOTTOM CONTENT
     st.markdown("<br>", unsafe_allow_html=True)
     c1, c2 = st.columns([2, 3])
     with c1:
@@ -151,11 +129,10 @@ if page == "Home":
             <h4 class="label-caps" style="color: #b10c69;">Foundation</h4>
             <h3 style="font-size: 2rem;">About This Project</h3>
             <p style="color: #584048; line-height: 1.7;">Developed as part of the <b>TARUMT AI Assignment</b>, this project explores the intersection of supervised machine learning and clinical diagnostics.</p>
-            <p style="color: #584048; line-height: 1.7;">The core objective is to evaluate how different algorithmic architectures—ranging from KNN to complex Neural Networks—interpret physiological signals.</p>
+            <p style="color: #584048; line-height: 1.7;">The core objective is to evaluate how different algorithmic architectures -- ranging from KNN to complex Neural Networks -- interpret physiological signals.</p>
         """, unsafe_allow_html=True)
     with c2:
         st.markdown('<h4 class="label-caps">Model Benchmarking</h4>', unsafe_allow_html=True)
-        # ANN Card
         st.markdown("""
             <div class="model-row editorial-shadow">
                 <div style="display:flex; align-items: center; gap: 1rem;">
@@ -164,9 +141,6 @@ if page == "Home":
                 </div>
                 <div style="text-align: right;"><h3 style="margin:0; color:#b10c69;">98.5%</h3><p class="label-caps" style="margin:0; font-size: 0.6rem;">Accuracy</p></div>
             </div>
-        """, unsafe_allow_html=True)
-        # SVM Card
-        st.markdown("""
             <div class="model-row editorial-shadow">
                 <div style="display:flex; align-items: center; gap: 1rem;">
                     <div style="background: rgba(93, 92, 116, 0.1); padding: 10px; border-radius: 50%;"><span class="material-symbols-outlined" style="color:#5d5c74;">border_inner</span></div>
@@ -206,7 +180,6 @@ elif page == "Predict":
 
     if predict_btn:
         if scaler is not None:
-            # PULLING FROM YOUR PKL - REAL LOGIC
             input_data = np.array([[age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal]])
             input_scaled = scaler.transform(input_data)
             
@@ -226,6 +199,31 @@ elif page == "Predict":
                 """, unsafe_allow_html=True)
         else:
             st.error("Model files not found in /models directory.")
+
+# ==================== PERFORMANCE PAGE ====================
+elif page == "Model Performance":
+    st.markdown('<h2 style="font-size: 3rem; margin-left: 2rem;">Model Performance</h2>', unsafe_allow_html=True)
+    st.markdown('<div class="bento-card editorial-shadow" style="margin: 0 2rem;">', unsafe_allow_html=True)
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown("### Accuracy Comparison")
+        acc_data = pd.DataFrame({
+            'Model': ['KNN', 'SVM', 'ANN'],
+            'Accuracy': [0.85, 0.88, 0.98]
+        })
+        fig, ax = plt.subplots()
+        sns.barplot(x='Model', y='Accuracy', data=acc_data, palette='magma', ax=ax)
+        st.pyplot(fig)
+        
+    with col2:
+        st.markdown("### Analysis Context")
+        st.write("""
+            The **Artificial Neural Network (ANN)** demonstrates the highest sensitivity and specificity. 
+            This is likely due to the complex nonlinear relationships between features like `thalach` 
+            (Max Heart Rate) and `oldpeak` (ST Depression).
+        """)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # ==================== DATASET OVERVIEW ====================
 elif page == "Dataset Overview":

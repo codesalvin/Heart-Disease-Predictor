@@ -151,23 +151,21 @@ if df is not None:
 
     col_dist, col_corr = st.columns(2)
     with col_dist:
-        st.markdown("### Class Distribution")
-    fig_dist, ax_dist = plt.subplots(figsize=(5, 4))
+    st.markdown("### Class Distribution")
+    # Restored to original compact size (approx 4x3 or 5x4)
+    fig_dist, ax_dist = plt.subplots(figsize=(4, 3.2)) 
     
-    # Sort by index (0, 1) so labels always match the bars
+    # Sort to ensure 0 is left and 1 is right
     counts = df['target'].value_counts().sort_index() 
     
-    # Plotting: 0 = No Disease (Navy), 1 = Has Disease (Pink)
+    # Plot with your specific theme colors
     counts.plot(kind='bar', ax=ax_dist, color=['#1a1a2e', '#b10c69'])
     
-    # Setting the labels to match the 0 and 1 index
-    ax_dist.set_xticklabels(['No Disease', 'Has Disease'], rotation=0)
+    # Clean, simple labels
+    ax_dist.set_xticklabels(['No Disease', 'Has Disease'], rotation=0, fontsize=8)
+    ax_dist.set_xlabel("") # Remove 'target' label to save space
     
-    # Adding the specific counts (500 and 525) on top of the bars
-    for i, v in enumerate(counts):
-        ax_dist.text(i, v + 5, str(v), ha='center', fontweight='bold', color='#1a1a2e')
-        
-    # Clean up the visual
+    # Remove borders to make it fit the 'Bento' look better
     ax_dist.spines['top'].set_visible(False)
     ax_dist.spines['right'].set_visible(False)
     

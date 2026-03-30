@@ -94,7 +94,6 @@ st.markdown('<p class="label-caps">Data Intelligence</p>', unsafe_allow_html=Tru
 st.markdown('<h2 style="font-size: 3rem;">Dataset Overview</h2>', unsafe_allow_html=True)
 
 if df is not None:
-    st.markdown('<div class="bento-card editorial-shadow">', unsafe_allow_html=True)
     st.markdown("### Clinical Data Sample")
     st.dataframe(df.head(10), use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)

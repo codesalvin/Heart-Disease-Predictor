@@ -157,6 +157,7 @@ if df is not None:
         ax_dist.set_xticklabels(['No Disease', 'Disease'], rotation=0)
         st.pyplot(fig_dist)
         st.markdown('</div>', unsafe_allow_html=True)
+        print(df['target'].value_counts())
 
     with col_corr:
         st.markdown("### Correlation Heatmap")

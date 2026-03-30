@@ -25,8 +25,18 @@ st.markdown("""
     h1, h2, h3, h4, .headline { font-family: 'Newsreader', serif !important; letter-spacing: -0.02em; }
     
     /* Custom Sidebar Styling */
-    [data-testid="stSidebar"] { background-color: #1a1a2e !important; min-width: 300px !important; }
-    [data-testid="stSidebar"] * { color: #ffffff !important; }
+    [data-testid="stSidebar"] {
+    background-color: #1a1a2e !important;
+    width: 300px !important;
+}
+
+section[data-testid="stSidebar"] {
+    display: block !important;
+}
+
+[data-testid="collapsedControl"] {
+    display: none !important; /* remove collapse button */
+}
     .sidebar-brand { padding: 2rem 1rem; }
     .sidebar-brand h1 { font-size: 1.5rem; margin-bottom: 0; }
     .sidebar-tagline { font-size: 0.65rem; color: #b10c69 !important; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; }

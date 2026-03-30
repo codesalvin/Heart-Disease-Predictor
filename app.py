@@ -14,58 +14,34 @@ st.set_page_config(
 
 # --- CSS INJECTION (Editorial Style) ---
 st.markdown("""
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
 <style>
-    /* 1. Global Text Color Force */
-    .stApp { 
-        background-color: #faf9f6; 
-        color: #000000 !important; 
-        font-family: 'Inter', sans-serif; 
-    }
-
-    /* 2. Headlines (Black) */
-    h1, h2, h3, h4, p, span { 
-        font-family: 'Newsreader', serif !important; 
-        color: #000000 !important;
-        letter-spacing: -0.02em; 
-    }
-
-    /* 3. Streamlit Input Labels (Age, Sex, etc.) */
+    /* 1. Force the labels (Age, Sex, Cholesterol, etc.) to Black */
     .stWidgetLabel p {
         color: #000000 !important;
         font-weight: 600 !important;
-        font-size: 0.9rem !important;
     }
 
-    /* 4. Selectbox and Number Input Text */
-    div[data-baseweb="select"] > div, div[data-baseweb="input"] input {
+    /* 2. Force the text inside the input boxes to Black */
+    div[data-baseweb="input"] input {
+        color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
+    }
+
+    /* 3. Force the selected text in dropdowns (Sex, CP, etc.) to Black */
+    div[data-baseweb="select"] span {
         color: #000000 !important;
     }
 
-    /* Keep your specific accent colors for branding */
-    .label-caps { 
-        font-size: 0.75rem; 
-        text-transform: uppercase; 
-        letter-spacing: 0.15em; 
-        color: #b10c69 !important; /* This stays pink for branding */
-        font-weight: 700; 
-        margin-bottom: 1rem; 
+    /* 4. Force the number input increment/decrement buttons to a darker shade */
+    div[data-testid="stNumberInputStepDown"], 
+    div[data-testid="stNumberInputStepUp"] {
+        color: #000000 !important;
     }
 
+    /* Keep the Card background clean white so the black text pops */
     .bento-card {
-        background: #ffffff; 
-        padding: 2rem; 
-        border-radius: 0.75rem; 
-        border: 1px solid rgba(0, 0, 0, 0.1); 
-        margin-bottom: 1.5rem;
+        background: #ffffff !important;
     }
-
-    .editorial-shadow { box-shadow: 0 32px 64px -12px rgba(0, 0, 0, 0.1); }
-    
-    [data-testid="stSidebar"], [data-testid="collapsedControl"] { display: none; }
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
 </style>
 """, unsafe_allow_html=True)
 

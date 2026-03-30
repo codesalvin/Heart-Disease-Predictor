@@ -246,7 +246,6 @@ if predict_btn:
 
 # ==================== SECTION 5: MODEL PERFORMANCE ====================
 st.markdown('<div class="section-divider"></div>', unsafe_allow_html=True)
-st.markdown('<p class="label-caps">Algorithmic Validation</p>', unsafe_allow_html=True)
 st.markdown('<h2 style="font-size: 3rem;">Model Performance</h2>', unsafe_allow_html=True)
 
 results = pd.DataFrame({
@@ -256,9 +255,6 @@ results = pd.DataFrame({
     'Recall': [89.32, 94.17, 97.09],
     'F1 Score': [84.40, 89.40, 98.52]
 })
-
-st.markdown("### Evaluation Metrics Comparison")
-st.dataframe(results.style.highlight_max(axis=0, color='#debec8'), use_container_width=True)
 
 # Bar Chart
 fig_perf, ax_perf = plt.subplots(figsize=(10, 5))

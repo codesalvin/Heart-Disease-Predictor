@@ -16,225 +16,170 @@ st.set_page_config(
 # --- Custom CSS ---
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
 
     html, body, [class*="css"] {
-        font-family: 'DM Sans', sans-serif;
-        background-color: #ffffff !important;
+        font-family: 'Inter', sans-serif;
+        background-color: #f7f7f9;
     }
 
-    .main, .block-container {
-        background-color: #ffffff !important;
-        padding-top: 2rem;
+    .main {
+        background-color: #f7f7f9;
     }
 
+    /* Sidebar */
     section[data-testid="stSidebar"] {
-        background-color: #1a1a2e !important;
+        background-color: #111827;
         padding-top: 2rem;
     }
 
     section[data-testid="stSidebar"] * {
-        color: white !important;
+        color: #e5e7eb !important;
     }
 
-    section[data-testid="stSidebar"] .stRadio {
-        display: none !important;
-    }
-
-    .sidebar-logo {
-        font-family: 'DM Serif Display', serif;
-        font-size: 26px;
-        color: white;
-        margin-bottom: 4px;
-        padding: 0 1.5rem;
-    }
-
-    .sidebar-tagline {
-        font-size: 12px;
-        color: #888 !important;
-        margin-bottom: 40px;
-        padding: 0 1.5rem;
-    }
-
-    .nav-divider {
-        height: 1px;
-        background: rgba(255,255,255,0.08);
-        margin: 16px 24px;
-    }
-
+    /* Cards */
     .metric-card {
         background: #ffffff;
-        border-radius: 16px;
-        padding: 24px;
-        box-shadow: 0 2px 16px rgba(0,0,0,0.06);
-        border: 1px solid #f0ede8;
+        border-radius: 12px;
+        padding: 20px;
+        border: 1px solid #e5e7eb;
         margin-bottom: 16px;
+        transition: 0.2s;
+    }
+
+    .metric-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(0,0,0,0.05);
     }
 
     .metric-value {
-        font-family: 'DM Serif Display', serif;
-        font-size: 42px;
-        color: #1a1a2e;
-        line-height: 1;
-        margin: 8px 0;
+        font-size: 32px;
+        font-weight: 600;
+        color: #111827;
     }
 
     .metric-label {
         font-size: 11px;
-        color: #aaa;
+        color: #9ca3af;
         text-transform: uppercase;
-        letter-spacing: 1.5px;
-        font-weight: 500;
+        letter-spacing: 1px;
     }
 
     .metric-sub {
         font-size: 13px;
-        color: #888;
-        margin-top: 4px;
+        color: #6b7280;
     }
 
+    /* Titles */
     .hero-title {
-        font-family: 'DM Serif Display', serif;
-        font-size: 52px;
-        color: #1a1a2e;
-        line-height: 1.1;
+        font-size: 42px;
+        font-weight: 600;
+        color: #111827;
         margin-bottom: 8px;
     }
 
     .hero-sub {
-        font-size: 16px;
-        color: #aaa;
-        font-weight: 300;
-        margin-bottom: 32px;
+        font-size: 15px;
+        color: #6b7280;
+        margin-bottom: 28px;
     }
 
     .section-title {
-        font-family: 'DM Serif Display', serif;
-        font-size: 28px;
-        color: #1a1a2e;
-        margin-bottom: 4px;
+        font-size: 22px;
+        font-weight: 600;
+        color: #111827;
+        margin-bottom: 6px;
     }
 
     .section-sub {
         font-size: 13px;
-        color: #aaa;
-        margin-bottom: 24px;
+        color: #9ca3af;
+        margin-bottom: 20px;
     }
 
+    /* Result Cards (clean version) */
     .result-card-high {
-        background: linear-gradient(135deg, #ff6b6b, #ee5a24);
-        border-radius: 16px;
-        padding: 28px 20px;
-        color: white;
+        background: #fee2e2;
+        border-radius: 12px;
+        padding: 20px;
         text-align: center;
-        box-shadow: 0 8px 24px rgba(238,90,36,0.25);
+        border: 1px solid #fecaca;
     }
 
     .result-card-low {
-        background: linear-gradient(135deg, #26de81, #20bf6b);
-        border-radius: 16px;
-        padding: 28px 20px;
-        color: white;
+        background: #dcfce7;
+        border-radius: 12px;
+        padding: 20px;
         text-align: center;
-        box-shadow: 0 8px 24px rgba(32,191,107,0.25);
+        border: 1px solid #bbf7d0;
     }
 
     .result-model {
-        font-size: 10px;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        opacity: 0.75;
-        margin-bottom: 10px;
+        font-size: 11px;
+        color: #6b7280;
+        letter-spacing: 1px;
+        margin-bottom: 6px;
     }
 
-    .result-icon { font-size: 32px; margin: 8px 0; }
-    .result-text { font-size: 18px; font-weight: 600; }
+    .result-text {
+        font-size: 16px;
+        font-weight: 600;
+        color: #111827;
+    }
 
+    /* Consensus */
     .consensus-high {
-        background: #fff5f5;
-        border: 1.5px solid #ffb8b8;
-        border-radius: 16px;
-        padding: 28px;
+        background: #fff1f2;
+        border: 1px solid #fecaca;
+        border-radius: 12px;
+        padding: 20px;
         text-align: center;
     }
 
     .consensus-low {
-        background: #f0fff8;
-        border: 1.5px solid #b8f5d4;
-        border-radius: 16px;
-        padding: 28px;
+        background: #ecfdf5;
+        border: 1px solid #bbf7d0;
+        border-radius: 12px;
+        padding: 20px;
         text-align: center;
     }
 
     .consensus-title {
-        font-family: 'DM Serif Display', serif;
-        font-size: 24px;
-        margin: 8px 0 4px;
+        font-size: 18px;
+        font-weight: 600;
+        color: #111827;
     }
 
-    /* Sidebar nav buttons */
-    section[data-testid="stSidebar"] .stButton > button {
-        background: transparent !important;
-        color: #aaa !important;
-        border: none !important;
-        border-left: 3px solid transparent !important;
-        border-radius: 0 !important;
-        padding: 12px 24px !important;
+    /* Buttons */
+    .stButton > button {
+        background: #111827 !important;
+        color: white !important;
+        border-radius: 10px !important;
+        padding: 12px !important;
         font-size: 14px !important;
         font-weight: 500 !important;
-        text-align: left !important;
-        box-shadow: none !important;
-        width: 100% !important;
-        justify-content: flex-start !important;
-        margin-bottom: 2px !important;
-        transform: none !important;
-        transition: all 0.2s !important;
-    }
-
-    section[data-testid="stSidebar"] .stButton > button:hover {
-        color: white !important;
-        background: rgba(255,255,255,0.06) !important;
-        border-left: 3px solid #e84393 !important;
-        transform: none !important;
-        box-shadow: none !important;
-    }
-
-    /* Main predict button */
-    .main-btn > .stButton > button {
-        background: linear-gradient(135deg, #e84393, #c0392b) !important;
-        color: white !important;
         border: none !important;
-        border-radius: 12px !important;
-        padding: 14px 28px !important;
-        font-size: 15px !important;
-        font-weight: 600 !important;
-        box-shadow: 0 4px 16px rgba(232,67,147,0.3) !important;
     }
 
-    .stNumberInput > div > div > input,
-    .stSelectbox > div > div {
-        border-radius: 10px !important;
-        border: 1.5px solid #eeebe6 !important;
-        background: #ffffff !important;
+    .stButton > button:hover {
+        background: #1f2937 !important;
     }
 
-    .input-section-title {
-        font-size: 10px;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        color: #e84393;
-        font-weight: 600;
-        margin-bottom: 16px;
-        padding-bottom: 8px;
-        border-bottom: 1.5px solid #fce4f0;
+    /* Inputs */
+    .stNumberInput input,
+    .stSelectbox div {
+        border-radius: 8px !important;
+        border: 1px solid #e5e7eb !important;
     }
 
+    /* Divider */
     .divider {
         height: 1px;
-        background: #f5f2ee;
-        margin: 32px 0;
+        background: #e5e7eb;
+        margin: 28px 0;
     }
 
+    /* Hide Streamlit branding */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}

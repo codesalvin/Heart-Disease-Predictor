@@ -7,7 +7,7 @@ import seaborn as sns
 
 # --- PAGE CONFIGURATION ---
 st.set_page_config(
-    page_title="CardioSense AI | Heart Disease Prediction",
+    page_title="Heart Disease Predictor",
     page_icon="❤️",
     layout="wide"
 )
@@ -121,8 +121,8 @@ st.markdown("""
             Heart Disease Predictor <span style="color: #b10c69; font-style: italic;">AI</span>
         </h1>
         <p style="font-size: 1.4rem; color: #584048; max-width: 700px; font-weight: 300; line-height: 1.6;">
-            An advanced diagnostic framework utilizing ensemble machine learning to synthesize 
-            cardiovascular risk factors into high-precision clinical insights.
+            A supervised machine learning project that gathers data from the UCI Machine Learning Repository:
+            Heart Disease Dataset, a gold standard for medical machine learning.
         </p>
     </div>
 """, unsafe_allow_html=True)
@@ -133,7 +133,7 @@ m1, m2, m3, m4 = st.columns(4)
 with m1:
     st.markdown('<div class="bento-card editorial-shadow"><p class="label-caps">Training Pool</p><h3 style="font-size: 2.5rem; margin:0;">1,025 <small style="font-size: 1rem; color: gray;">Records</small></h3></div>', unsafe_allow_html=True)
 with m2:
-    st.markdown('<div class="bento-card editorial-shadow"><p class="label-caps">Biomarkers</p><h3 style="font-size: 2.5rem; margin:0;">13 <small style="font-size: 1rem; color: gray;">Params</small></h3></div>', unsafe_allow_html=True)
+    st.markdown('<div class="bento-card editorial-shadow"><p class="label-caps">Clinical attributes</p><h3 style="font-size: 2.5rem; margin:0;">13 <small style="font-size: 1rem; color: gray;">Params</small></h3></div>', unsafe_allow_html=True)
 with m3:
     st.markdown('<div class="bento-card editorial-shadow" style="background: #1a1a2e; color: white;"><p class="label-caps" style="color: #b10c69;">Peak Accuracy</p><h3 style="font-size: 2.5rem; margin:0; color: white;">98.5% <small style="font-size: 1rem;">ANN</small></h3></div>', unsafe_allow_html=True)
 with m4:
@@ -293,7 +293,7 @@ for col, (model_name, cm) in zip([col_cm1, col_cm2, col_cm3], cm_data.items()):
 # --- FOOTER ---
 st.markdown(f"""
     <div style="margin-top: 6rem; padding: 3rem 0; border-top: 1px solid #debec8; display: flex; justify-content: space-between; opacity: 0.6;">
-        <p class="label-caps" style="font-size: 0.65rem;">© 2026 CardioSense AI | TARUMT University</p>
-        <p class="label-caps" style="font-size: 0.65rem;">Research Lead: Artificial Intelligence Faculty</p>
+        <p class="label-caps" style="font-size: 0.65rem;">© 2026 Heart Disease Predictor | TARUMT University</p>
+        <p class="label-caps" style="font-size: 0.65rem;">Choi Kah Wai, Rafael Hon Zhong Hang, Gan Jue Yu </p>
     </div>
 """, unsafe_allow_html=True)

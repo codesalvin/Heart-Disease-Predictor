@@ -228,6 +228,8 @@ with st.container():
     st.markdown("<br>", unsafe_allow_html=True)
     predict_btn = st.button("Predict now", use_container_width=True, type="primary")
     st.markdown('</div>', unsafe_allow_html=True)
+    prediction = model.predict(input_data)
+    st.write(f"Raw Model Output: {prediction}")
 
 if predict_btn:
     if scaler is not None:

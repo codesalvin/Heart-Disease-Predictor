@@ -151,7 +151,7 @@ if df is not None:
 
     col_dist, col_corr = st.columns(2)
     with col_dist:
-    st.markdown("### Class Distribution")
+        st.markdown("### Class Distribution")
     # Restored to original compact size (approx 4x3 or 5x4)
     fig_dist, ax_dist = plt.subplots(figsize=(4, 3.2)) 
     

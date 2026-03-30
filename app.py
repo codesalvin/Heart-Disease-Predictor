@@ -43,6 +43,19 @@ st.markdown("""
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
+
+    /* Make all input labels black */
+label {
+    color: #000000 !important;
+}
+
+/* More specific Streamlit selectors (recommended) */
+[data-testid="stNumberInput"] label,
+[data-testid="stSelectbox"] label,
+[data-testid="stSlider"] label,
+[data-testid="stTextInput"] label {
+    color: #000000 !important;
+}
 </style>
 """, unsafe_allow_html=True)
 

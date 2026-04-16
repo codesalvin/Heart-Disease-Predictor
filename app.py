@@ -243,8 +243,8 @@ if predict_btn:
         
         res_cols = st.columns(3)
         for col, name, pred in zip(res_cols, names, preds):
-            color = "#ba1a1a" if pred == 0 else "#006a39"
-            status = "HIGH RISK" if pred == 0 else "LOW RISK"
+            color = "#ba1a1a" if pred == 1 else "#006a39"
+            status = "HIGH RISK" if pred == 1 else "LOW RISK"
             col.markdown(f"""
                 <div class="res-box editorial-shadow" style="border-top: 5px solid {color};">
                     <p class="label-caps">{name}</p>
